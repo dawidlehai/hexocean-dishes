@@ -5,6 +5,16 @@ import PizzaForm from "./DishForm/PizzaForm";
 import SoupForm from "./DishForm/SoupForm";
 import SandwichForm from "./DishForm/SandwichForm";
 
+export interface DishFormValues {
+  name: string;
+  preparation_time: string;
+  type: string;
+  no_of_slices?: number;
+  diameter?: number;
+  spiciness_scale?: number;
+  slices_of_bread?: number;
+}
+
 interface DishFormProps {
   handleSubmit: (event: FormEvent<HTMLFormElement>) => void;
   pristine: boolean;
