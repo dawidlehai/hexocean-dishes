@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, Fragment } from "react";
 import { FormSubmitHandler } from "redux-form";
 import DishForm from "./components/DishForm";
 import "./App.css";
@@ -16,22 +16,26 @@ function App() {
   const sendDataHandler: FormSubmitHandler<object> = async (
     formData: object
   ) => {
-    const data = formData as DishFormValues;
+    // const data = formData as DishFormValues;
 
-    const dataFiltered: DishFormValues = {
-      name: data.name,
-      preparation_time: data.preparation_time,
-      type: data.type,
+    // const dataFiltered: DishFormValues = {
+    //   name: data.name,
+    //   preparation_time: data.preparation_time,
+    //   type: data.type,
+    // };
+
+    // if (data.type === "pizza") {
+    //   dataFiltered.no_of_slices = data.no_of_slices;
+    //   dataFiltered.diameter = data.diameter;
+    // }
+    // if (data.type === "soup")
+    //   dataFiltered.spiciness_scale = data.spiciness_scale;
+    // if (data.type === "sandwich")
+    //   dataFiltered.slices_of_bread = data.slices_of_bread;
+
+    const data = {
+      name: "wadad",
     };
-
-    if (data.type === "pizza") {
-      dataFiltered.no_of_slices = data.no_of_slices;
-      dataFiltered.diameter = data.diameter;
-    }
-    if (data.type === "soup")
-      dataFiltered.spiciness_scale = data.spiciness_scale;
-    if (data.type === "sandwich")
-      dataFiltered.slices_of_bread = data.slices_of_bread;
 
     try {
       const options = {
@@ -77,9 +81,9 @@ function App() {
             <p>
               Details:{" "}
               {Object.entries(response).map(([field, value], index, arr) => (
-                <>
+                <Fragment key={field}>
                   {value} ({field}){index === arr.length - 1 ? "." : "; "}
-                </>
+                </Fragment>
               ))}
             </p>
           </>
