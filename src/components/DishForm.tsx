@@ -87,7 +87,10 @@ const DishForm = ({ handleSubmit, pristine, submitting }: DishFormProps) => {
       {dishType === "soup" && <SoupForm onBlur={handleInputBlur} />}
       {dishType === "sandwich" && <SandwichForm onBlur={handleInputBlur} />}
 
-      <button type="submit" disabled={pristine || submitting}>
+      <button
+        type="submit"
+        disabled={pristine || submitting}
+        className={submitting ? "loading" : ""}>
         {submitting ? "Sending..." : "Submit"}
       </button>
     </form>

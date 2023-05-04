@@ -32,11 +32,24 @@
   font-weight: bold;
 }
 
+.loading {
+  animation: loading 1s alternate infinite;
+}
+
 @keyframes appear {
   from {
     opacity: 0;
   }
   to {
     opacity: 1;
+  }
+}
+
+@keyframes loading {
+  from {
+    background-color: #f9f9f9;
+  }
+  to {
+    background-color: #e7e8fa;
   }
 }
