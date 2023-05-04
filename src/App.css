@@ -4,9 +4,6 @@
   padding: 2rem;
 }
 
-.dish-form {
-}
-
 .dish-form :is(input, select) {
   display: block;
   border: none;

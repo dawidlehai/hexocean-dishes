@@ -8,7 +8,7 @@ import SandwichForm from "./DishForm/SandwichForm";
 export interface DishFormValues {
   name: string;
   preparation_time: string;
-  type: string;
+  type: "pizza" | "soup" | "sandwich";
   no_of_slices?: number;
   diameter?: number;
   spiciness_scale?: number;
