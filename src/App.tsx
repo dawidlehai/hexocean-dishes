@@ -1,13 +1,23 @@
 import { useState } from "react";
+import { FormSubmitHandler } from "redux-form";
 import DishForm from "./components/DishForm";
 import "./App.css";
 import type { DishFormValues } from "./components/DishForm";
 
 function App() {
-  const [response, setResponse] = useState();
+  interface responseType {
+    error?: string;
+    data?: DishFormValues;
+  }
+
+  const [response, setResponse] = useState<responseType | undefined>();
   const [responseOk, setResponseOk] = useState(true);
 
-  const sendDataHandler = async (data: DishFormValues) => {
+  const sendDataHandler: FormSubmitHandler<object> = async (
+    formData: object
+  ) => {
+    const data = formData as DishFormValues;
+
     const dataFiltered: DishFormValues = {
       name: data.name,
       preparation_time: data.preparation_time,
@@ -40,7 +50,7 @@ function App() {
       if (!apiResponse.ok) setResponseOk(false);
 
       setResponse(await apiResponse.json());
-    } catch (error) {
+    } catch (error: any) {
       const message = {
         error: error.message ?? "Something went really wrong!",
       };

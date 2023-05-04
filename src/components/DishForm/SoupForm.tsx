@@ -1,6 +1,7 @@
 import { Field } from "redux-form";
+import type { SubFormProps } from "./PizzaForm";
 
-const SoupForm = () => {
+const SoupForm = ({ onBlur }: SubFormProps) => {
   return (
     <div className="appear">
       <label>
@@ -13,6 +14,7 @@ const SoupForm = () => {
           max="10"
           placeholder="5"
           required
+          onBlur={onBlur}
         />
       </label>
     </div>

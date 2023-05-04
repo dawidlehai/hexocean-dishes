@@ -1,6 +1,7 @@
 import { Field } from "redux-form";
+import type { SubFormProps } from "./PizzaForm";
 
-const SandwichForm = () => {
+const SandwichForm = ({ onBlur }: SubFormProps) => {
   return (
     <div className="appear">
       <label>
@@ -12,6 +13,7 @@ const SandwichForm = () => {
           min="1"
           placeholder="2"
           required
+          onBlur={onBlur}
         />
       </label>
     </div>

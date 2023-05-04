@@ -1,6 +1,11 @@
+import { FocusEventHandler } from "react";
 import { Field } from "redux-form";
 
-const PizzaForm = () => {
+export interface SubFormProps {
+  onBlur: FocusEventHandler<HTMLInputElement>;
+}
+
+const PizzaForm = ({ onBlur }: SubFormProps) => {
   return (
     <div className="appear">
       <label>
@@ -12,6 +17,7 @@ const PizzaForm = () => {
           min="1"
           placeholder="4"
           required
+          onBlur={onBlur}
         />
       </label>
       <label>
@@ -24,6 +30,7 @@ const PizzaForm = () => {
           step="0.01"
           placeholder="33.4"
           required
+          onBlur={onBlur}
         />
       </label>
     </div>

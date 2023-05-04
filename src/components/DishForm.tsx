@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, FormEvent } from "react";
+import { useState, ChangeEvent, FormEvent, FocusEventHandler } from "react";
 import { Field, reduxForm } from "redux-form";
 
 import PizzaForm from "./DishForm/PizzaForm";
@@ -28,13 +28,17 @@ const DishForm = ({ handleSubmit, pristine, submitting }: DishFormProps) => {
     setDishType(target.value);
   };
 
-  const handleInputChange = ({ target }: ChangeEvent<HTMLSelectElement>) => {
+  const handleInputChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
     if (target.validity.patternMismatch && target.name === "preparation_time")
       target.setCustomValidity(
-        "Please provide preparation time in the HH:MM:SS (hours, minutes, seconds) format."
+        "Please provide preparation time in the HH:MM:SS (hours, minutes, seconds) format. The maximum value is 23:59:59."
       );
     if (!target.validity.patternMismatch) target.setCustomValidity("");
   };
+
+  const handleInputBlur: FocusEventHandler<
+    HTMLInputElement | HTMLSelectElement
+  > = ({ target }) => target.reportValidity();
 
   return (
     <form onSubmit={handleSubmit} className="dish-form">
@@ -45,8 +49,8 @@ const DishForm = ({ handleSubmit, pristine, submitting }: DishFormProps) => {
           component="input"
           type="text"
           placeholder="HexOcean Pizza"
-          onChange={handleInputChange}
           required
+          onBlur={handleInputBlur}
         />
       </label>
 
@@ -58,8 +62,9 @@ const DishForm = ({ handleSubmit, pristine, submitting }: DishFormProps) => {
           type="text"
           pattern="^([0-1]\d|2[0-3]):([0-5]\d):([0-5]\d)$"
           placeholder="01:30:22"
-          onChange={handleInputChange}
           required
+          onChange={handleInputChange}
+          onBlur={handleInputBlur}
         />
       </label>
 
@@ -69,7 +74,8 @@ const DishForm = ({ handleSubmit, pristine, submitting }: DishFormProps) => {
           name="type"
           component="select"
           onChange={handleDishTypeChange}
-          required>
+          required
+          onBlur={handleInputBlur}>
           <option value=""></option>
           <option value="pizza">Pizza</option>
           <option value="soup">Soup</option>
@@ -77,9 +83,9 @@ const DishForm = ({ handleSubmit, pristine, submitting }: DishFormProps) => {
         </Field>
       </label>
 
-      {dishType === "pizza" && <PizzaForm />}
-      {dishType === "soup" && <SoupForm />}
-      {dishType === "sandwich" && <SandwichForm />}
+      {dishType === "pizza" && <PizzaForm onBlur={handleInputBlur} />}
+      {dishType === "soup" && <SoupForm onBlur={handleInputBlur} />}
+      {dishType === "sandwich" && <SandwichForm onBlur={handleInputBlur} />}
 
       <button type="submit" disabled={pristine || submitting}>
         {submitting ? "Sending..." : "Submit"}
