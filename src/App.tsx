@@ -23,8 +23,6 @@ function App() {
     if (data.type === "sandwich")
       dataFiltered.slices_of_bread = data.slices_of_bread;
 
-    console.log(dataFiltered);
-
     try {
       const options = {
         method: "POST",
@@ -58,14 +56,14 @@ function App() {
     <>
       <header>
         <h1>HexOcean Dishes</h1>
-        <p>Add your favourite dish now!</p>
+        {!response && <p>Add your favourite dish now!</p>}
       </header>
-      <main>
+      <main className={response ? "center" : ""}>
         {!response && <DishForm onSubmit={sendDataHandler} />}
         {response && responseOk && <p>Your dish was sent successfully!</p>}
         {response && !responseOk && (
           <>
-            <p>There was a problem sending the data.</p>
+            <p className="error">There was a problem with the request.</p>
             <p>
               Details:{" "}
               {Object.entries(response).map(([field, value], index, arr) => (

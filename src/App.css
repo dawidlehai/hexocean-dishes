@@ -23,6 +23,15 @@
   animation: 0.5s appear;
 }
 
+.center {
+  text-align: center;
+}
+
+.error {
+  color: rgb(174, 55, 55);
+  font-weight: bold;
+}
+
 @keyframes appear {
   from {
     opacity: 0;

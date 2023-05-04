@@ -29,10 +29,6 @@ const DishForm = ({ handleSubmit, pristine, submitting }: DishFormProps) => {
   };
 
   const handleInputChange = ({ target }: ChangeEvent<HTMLSelectElement>) => {
-    if (target.validity.patternMismatch && target.name === "name")
-      target.setCustomValidity(
-        "Please use only letters, numbers, spaces, and underscores."
-      );
     if (target.validity.patternMismatch && target.name === "preparation_time")
       target.setCustomValidity(
         "Please provide preparation time in the HH:MM:SS (hours, minutes, seconds) format."
@@ -48,7 +44,6 @@ const DishForm = ({ handleSubmit, pristine, submitting }: DishFormProps) => {
           name="name"
           component="input"
           type="text"
-          pattern="^[\w\s]+$"
           placeholder="HexOcean Pizza"
           onChange={handleInputChange}
           required
