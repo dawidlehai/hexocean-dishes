@@ -1,17 +1,33 @@
-import { useState } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 import { Field, reduxForm } from "redux-form";
 
 import PizzaForm from "./DishForm/PizzaForm";
 import SoupForm from "./DishForm/SoupForm";
 import SandwichForm from "./DishForm/SandwichForm";
 
-const DishForm = (props) => {
-  const { handleSubmit, pristine, submitting } = props;
+interface DishFormProps {
+  handleSubmit: (event: FormEvent<HTMLFormElement>) => void;
+  pristine: boolean;
+  submitting: boolean;
+}
 
+const DishForm = ({ handleSubmit, pristine, submitting }: DishFormProps) => {
   const [dishType, setDishType] = useState("");
 
-  const handleDishTypeChange = (event) => {
-    setDishType(event.target.value);
+  const handleDishTypeChange = ({ target }: ChangeEvent<HTMLSelectElement>) => {
+    setDishType(target.value);
+  };
+
+  const handleInputChange = ({ target }: ChangeEvent<HTMLSelectElement>) => {
+    if (target.validity.patternMismatch && target.name === "name")
+      target.setCustomValidity(
+        "Please use only letters, numbers, spaces, and underscores."
+      );
+    if (target.validity.patternMismatch && target.name === "preparation_time")
+      target.setCustomValidity(
+        "Please provide preparation time in the HH:MM:SS (hours, minutes, seconds) format."
+      );
+    if (!target.validity.patternMismatch) target.setCustomValidity("");
   };
 
   return (
@@ -22,8 +38,9 @@ const DishForm = (props) => {
           name="name"
           component="input"
           type="text"
-          pattern="[\w\s]+"
+          pattern="^[\w\s]+$"
           placeholder="HexOcean Pizza"
+          onChange={handleInputChange}
           required
         />
       </label>
@@ -34,8 +51,9 @@ const DishForm = (props) => {
           name="preparation_time"
           component="input"
           type="text"
-          pattern="[0-9]{2}:[0-9]{2}:[0-9]{2}"
+          pattern="^([0-1]\d|2[0-3]):([0-5]\d):([0-5]\d)$"
           placeholder="01:30:22"
+          onChange={handleInputChange}
           required
         />
       </label>
@@ -59,7 +77,7 @@ const DishForm = (props) => {
       {dishType === "sandwich" && <SandwichForm />}
 
       <button type="submit" disabled={pristine || submitting}>
-        Submit
+        {submitting ? "Sending..." : "Submit"}
       </button>
     </form>
   );
