@@ -2,16 +2,19 @@ import { Field } from "redux-form";
 
 const SandwichForm = () => {
   return (
-    <label>
-      Number of slices of bread required:{" "}
-      <Field
-        name="slices_of_bread"
-        component="input"
-        type="number"
-        min="1"
-        required
-      />
-    </label>
+    <div className="appear">
+      <label>
+        Number of slices of bread required:{" "}
+        <Field
+          name="slices_of_bread"
+          component="input"
+          type="number"
+          min="1"
+          placeholder="2"
+          required
+        />
+      </label>
+    </div>
   );
 };
 

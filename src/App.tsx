@@ -15,6 +15,7 @@ function App() {
     //   no_of_slices: 4,
     //   diameter: 0,
     // };
+    console.log(data);
 
     try {
       const options = {
@@ -47,28 +48,33 @@ function App() {
 
   return (
     <>
-      <h1>HexOcean Dishes</h1>
-      {!response && <DishForm onSubmit={sendDataHandler} />}
-      {response && responseOk && <p>Your dish was sent successfully!</p>}
-      {response && !responseOk && (
-        <>
-          <p>There was a problem sending the data.</p>
-          <p>
-            Details:{" "}
-            {Object.entries(response).map(([field, value], index, arr) => (
-              <>
-                {value} ({field}){index === arr.length - 1 ? "." : "; "}
-              </>
-            ))}
-          </p>
-        </>
-      )}
-      {response && (
-        <button onClick={refreshPageHandler}>
-          {responseOk && "Send another dish"}
-          {!responseOk && "Try again"}
-        </button>
-      )}
+      <header>
+        <h1>HexOcean Dishes</h1>
+        <p>Add your favourite dish now!</p>
+      </header>
+      <main>
+        {!response && <DishForm onSubmit={sendDataHandler} />}
+        {response && responseOk && <p>Your dish was sent successfully!</p>}
+        {response && !responseOk && (
+          <>
+            <p>There was a problem sending the data.</p>
+            <p>
+              Details:{" "}
+              {Object.entries(response).map(([field, value], index, arr) => (
+                <>
+                  {value} ({field}){index === arr.length - 1 ? "." : "; "}
+                </>
+              ))}
+            </p>
+          </>
+        )}
+        {response && (
+          <button onClick={refreshPageHandler}>
+            {responseOk && "Send another dish"}
+            {!responseOk && "Try again"}
+          </button>
+        )}
+      </main>
     </>
   );
 }

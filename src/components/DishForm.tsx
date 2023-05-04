@@ -41,9 +41,9 @@ const DishForm = ({ handleSubmit, pristine, submitting }: DishFormProps) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="dish-form">
       <label>
-        Dish Name:{" "}
+        Dish name:{" "}
         <Field
           name="name"
           component="input"
@@ -56,7 +56,7 @@ const DishForm = ({ handleSubmit, pristine, submitting }: DishFormProps) => {
       </label>
 
       <label>
-        Preparation Time:{" "}
+        Preparation time:{" "}
         <Field
           name="preparation_time"
           component="input"
@@ -69,7 +69,7 @@ const DishForm = ({ handleSubmit, pristine, submitting }: DishFormProps) => {
       </label>
 
       <label>
-        Dish Type:{" "}
+        Dish type:{" "}
         <Field
           name="type"
           component="select"
