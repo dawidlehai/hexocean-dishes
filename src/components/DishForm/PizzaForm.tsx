@@ -9,7 +9,7 @@ const PizzaForm = ({ onBlur }: SubFormProps) => {
   return (
     <div className="appear">
       <label>
-        Number of slices:{" "}
+        Number of slices*:{" "}
         <Field
           name="no_of_slices"
           component="input"
@@ -21,7 +21,7 @@ const PizzaForm = ({ onBlur }: SubFormProps) => {
         />
       </label>
       <label>
-        Diameter:{" "}
+        Diameter*:{" "}
         <Field
           name="diameter"
           component="input"

@@ -5,7 +5,7 @@ const SoupForm = ({ onBlur }: SubFormProps) => {
   return (
     <div className="appear">
       <label>
-        Spiciness scale (1-10):{" "}
+        Spiciness scale (1-10)*:{" "}
         <Field
           name="spiciness_scale"
           component="input"

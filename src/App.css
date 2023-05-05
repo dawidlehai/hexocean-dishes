@@ -36,6 +36,10 @@
   animation: loading 1s alternate infinite;
 }
 
+.info {
+  font-size: 0.9rem;
+}
+
 @keyframes appear {
   from {
     opacity: 0;

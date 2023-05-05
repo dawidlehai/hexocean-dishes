@@ -5,7 +5,7 @@ const SandwichForm = ({ onBlur }: SubFormProps) => {
   return (
     <div className="appear">
       <label>
-        Number of slices of bread required:{" "}
+        Number of slices of bread required*:{" "}
         <Field
           name="slices_of_bread"
           component="input"

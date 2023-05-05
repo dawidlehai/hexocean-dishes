@@ -17,23 +17,24 @@ export interface DishFormValues {
 
 interface DishFormProps {
   handleSubmit: (event: FormEvent<HTMLFormElement>) => void;
-  pristine: boolean;
   submitting: boolean;
 }
 
-const DishForm = ({ handleSubmit, pristine, submitting }: DishFormProps) => {
+const DishForm = ({ handleSubmit, submitting }: DishFormProps) => {
   const [dishType, setDishType] = useState("");
 
   const handleDishTypeChange = ({ target }: ChangeEvent<HTMLSelectElement>) => {
     setDishType(target.value);
   };
 
-  const handleInputChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
-    if (target.validity.patternMismatch && target.name === "preparation_time")
+  const handlePrepTimeChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
+    if (target.validity.patternMismatch) {
       target.setCustomValidity(
         "Please provide preparation time in the HH:MM:SS (hours, minutes, seconds) format. The maximum value is 23:59:59."
       );
-    if (!target.validity.patternMismatch) target.setCustomValidity("");
+    } else {
+      target.setCustomValidity("");
+    }
   };
 
   const handleInputBlur: FocusEventHandler<
@@ -43,7 +44,7 @@ const DishForm = ({ handleSubmit, pristine, submitting }: DishFormProps) => {
   return (
     <form onSubmit={handleSubmit} className="dish-form">
       <label>
-        Dish name:{" "}
+        Dish name*:{" "}
         <Field
           name="name"
           component="input"
@@ -55,7 +56,7 @@ const DishForm = ({ handleSubmit, pristine, submitting }: DishFormProps) => {
       </label>
 
       <label>
-        Preparation time:{" "}
+        Preparation time*:{" "}
         <Field
           name="preparation_time"
           component="input"
@@ -63,13 +64,13 @@ const DishForm = ({ handleSubmit, pristine, submitting }: DishFormProps) => {
           pattern="^([0-1]\d|2[0-3]):([0-5]\d):([0-5]\d)$"
           placeholder="01:30:22"
           required
-          onChange={handleInputChange}
+          onChange={handlePrepTimeChange}
           onBlur={handleInputBlur}
         />
       </label>
 
       <label>
-        Dish type:{" "}
+        Dish type*:{" "}
         <Field
           name="type"
           component="select"
@@ -89,10 +90,12 @@ const DishForm = ({ handleSubmit, pristine, submitting }: DishFormProps) => {
 
       <button
         type="submit"
-        disabled={pristine || submitting}
+        disabled={submitting}
         className={submitting ? "loading" : ""}>
         {submitting ? "Sending..." : "Submit"}
       </button>
+
+      <p className="info">* all fields are required</p>
     </form>
   );
 };
