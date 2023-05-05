@@ -49,6 +49,7 @@ const DishForm = ({ handleSubmit, submitting }: DishFormProps) => {
           name="name"
           component="input"
           type="text"
+          minLength="3"
           placeholder="HexOcean Pizza"
           required
           onBlur={handleInputBlur}
