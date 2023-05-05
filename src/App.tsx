@@ -5,8 +5,9 @@ import filterDataByDishType from "./utils/filterDataByDishType";
 import DishForm from "./components/DishForm";
 import "./App.css";
 import sendDishData from "./utils/sendDishData";
+import SubmitResultPage from "./components/SubmitResultPage";
 
-interface responseType {
+export interface responseType {
   error?: string;
   data?: DishFormValues;
 }
@@ -36,10 +37,6 @@ function App() {
     }
   };
 
-  const refreshPageHandler = () => {
-    window.location.reload();
-  };
-
   return (
     <>
       <header>
@@ -47,27 +44,9 @@ function App() {
         {!response && <p>Add your favourite dish now!</p>}
       </header>
       <main className={response ? "center" : ""}>
-        {/* TODO wyodrębnić */}
         {!response && <DishForm onSubmit={sendDataHandler} />}
-        {response && responseOk && <p>Your dish was sent successfully!</p>}
-        {response && !responseOk && (
-          <>
-            <p className="error">There was a problem with the request.</p>
-            <p>
-              Details:{" "}
-              {Object.entries(response).map(([field, value], index, arr) => (
-                <Fragment key={field}>
-                  {value} ({field}){index === arr.length - 1 ? "." : "; "}
-                </Fragment>
-              ))}
-            </p>
-          </>
-        )}
         {response && (
-          <button onClick={refreshPageHandler}>
-            {responseOk && "Add another one"}
-            {!responseOk && "Try again"}
-          </button>
+          <SubmitResultPage responseOk={responseOk} response={response} />
         )}
       </main>
     </>
