@@ -1,8 +1,10 @@
 import { useState, Fragment } from "react";
 import { FormSubmitHandler } from "redux-form";
+import type { DishFormValues } from "./components/DishForm";
+import filterDataByDishType from "./utils/filterDataByDishType";
 import DishForm from "./components/DishForm";
 import "./App.css";
-import type { DishFormValues } from "./components/DishForm";
+import sendDishData from "./utils/sendDishData";
 
 interface responseType {
   error?: string;
@@ -13,47 +15,16 @@ function App() {
   const [response, setResponse] = useState<responseType | undefined>();
   const [responseOk, setResponseOk] = useState(true);
 
-  const sendDataHandler: FormSubmitHandler<object> = async (
-    formData: object
-  ) => {
-    const data = formData as DishFormValues;
-
-    // TODO
-
-    const dataFiltered: DishFormValues = {
-      name: data.name,
-      preparation_time: data.preparation_time,
-      type: data.type,
-    };
-
-    if (data.type === "pizza") {
-      dataFiltered.no_of_slices = data.no_of_slices;
-      dataFiltered.diameter = data.diameter;
-    }
-    if (data.type === "soup")
-      dataFiltered.spiciness_scale = data.spiciness_scale;
-    if (data.type === "sandwich")
-      dataFiltered.slices_of_bread = data.slices_of_bread;
-
-    // TODO
+  const sendDataHandler: FormSubmitHandler<object> = async (data: object) => {
+    const dataFiltered = filterDataByDishType(data as DishFormValues);
 
     try {
-      const options = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(dataFiltered),
-      };
-
-      const apiResponse = await fetch(
-        "https://umzzcc503l.execute-api.us-west-2.amazonaws.com/dishes/",
-        options
-      );
+      const apiResponse = await sendDishData(dataFiltered);
 
       if (!apiResponse.ok) setResponseOk(false);
 
       const resolvedResponse = await apiResponse.json();
+
       setResponse(resolvedResponse);
     } catch (error: any) {
       const message = {
